@@ -5,11 +5,17 @@
 <ul>
   <li
     *ngFor="let hero of heroes"
-    (click)=onHeroClick(hero)
+    routerLink="/detail/{{hero.id}}"
     [class.selected]="hero === selectedHero"
   >
     {{hero.name}}
 </li>
 </ul>
 
-<app-hero-detail [hero]="selectedHero"></app-hero-detail>
+<div>
+  <label>
+    Hero name:
+    <input #heroName />
+    <button (click)="add(heroName.value); heroName.value=''">add</button>
+  </label>
+</div>

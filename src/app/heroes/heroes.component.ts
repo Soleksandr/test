@@ -14,15 +14,25 @@ export class HeroesComponent implements OnInit {
 
   heroes: Hero[];
 
-  onHeroClick = (hero: Hero) => {
-    console.log('hero = ', hero);
-    this.selectedHero = hero;
-  }
-
   constructor(private heroService: HeroService) { }
 
   ngOnInit() {
-    this.heroService.fetchHeroes().subscribe(heroes => this.heroes = heroes);
+    this.heroService.fetchHeroes().subscribe(heroes => {
+      console.log('--heroes--', heroes);
+      this.heroes = heroes;
+    });
+  }
+
+  add(name: string) {
+    name = name.trim();
+
+    if (!name) { return; }
+
+    this.heroService.createHero(name)
+      .subscribe(hero => {
+        console.log('new hero = ', hero);
+        this.heroes.push(hero);
+      });
   }
 
 }
