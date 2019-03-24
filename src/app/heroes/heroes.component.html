@@ -3,13 +3,10 @@
 <input [(ngModel)]="hero.name" placeholder="name" type="text" /> -->
 
 <ul>
-  <li
-    *ngFor="let hero of heroes"
-    routerLink="/detail/{{hero.id}}"
-    [class.selected]="hero === selectedHero"
-  >
+  <li *ngFor="let hero of heroes" routerLink="/detail/{{hero.id}}" [class.selected]="hero === selectedHero">
     {{hero.name}}
-</li>
+    <button class="delete" title="delete hero" (click)="delete(hero)">x</button>
+  </li>
 </ul>
 
 <div>

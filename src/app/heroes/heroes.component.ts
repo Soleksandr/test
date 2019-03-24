@@ -1,24 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
-import { Hero } from '../hero';
-import { HeroService } from '../hero.service';
+import { Hero } from "../hero";
+import { HeroService } from "../hero.service";
 
 @Component({
-  selector: 'app-heroes',
-  templateUrl: './heroes.component.html',
-  styleUrls: ['./heroes.component.scss']
+  selector: "app-heroes",
+  templateUrl: "./heroes.component.html",
+  styleUrls: ["./heroes.component.scss"]
 })
 export class HeroesComponent implements OnInit {
-
   selectedHero: Hero = null;
 
   heroes: Hero[];
 
-  constructor(private heroService: HeroService) { }
+  constructor(private heroService: HeroService) {}
 
   ngOnInit() {
     this.heroService.fetchHeroes().subscribe(heroes => {
-      console.log('--heroes--', heroes);
+      console.log("--heroes--", heroes);
       this.heroes = heroes;
     });
   }
@@ -26,13 +25,17 @@ export class HeroesComponent implements OnInit {
   add(name: string) {
     name = name.trim();
 
-    if (!name) { return; }
+    if (!name) {
+      return;
+    }
 
-    this.heroService.createHero(name)
-      .subscribe(hero => {
-        console.log('new hero = ', hero);
-        this.heroes.push(hero);
-      });
+    this.heroService.createHero({ name }).subscribe(hero => {
+      this.heroes.push(hero);
+    });
   }
 
+  delete(hero: Hero) {
+    this.heroes = this.heroes.filter(h => h.id !== hero.id);
+    this.heroService.deleteHero(hero);
+  }
 }
